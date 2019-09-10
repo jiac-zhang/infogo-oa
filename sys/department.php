@@ -15,8 +15,13 @@ check_login();
 check_permission();
 
 $db = db::getInstance();
-$sql = "SELECT d.*,u.id as user_id,u.nickname FROM info_departments d LEFT JOIN info_users u on d.id = u.department_id AND u.role_id = 2 ORDER BY d.id ASC";
+$count_sql = "SELECT count(id) as total FROM info_departments";
+$count_result = $db->query($count_sql);
+$total = $count_result ? $count_result[0]['total'] : 0;
 
+$page = new page($total);
+
+$sql = "SELECT d.*,u.id as user_id,u.nickname FROM info_departments d LEFT JOIN info_users u on d.id = u.department_id AND u.role_id = 2 ORDER BY d.id ASC LIMIT {$page->limit()}";
 $result = $db->query($sql);
 ?>
 <html lang="zh-CN">
@@ -69,6 +74,11 @@ $result = $db->query($sql);
                 ?>
             </tbody>
         </table>
+        <?php
+        if ($page->getPageCount() > 1) {
+            include 'public/views/pagination.php';
+        }
+        ?>
     </div>
 </div>
 <footer class="footer">

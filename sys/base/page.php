@@ -175,7 +175,7 @@ class page
         return $page;
     }
 
-    protected function getPageCount()
+    public function getPageCount()
     {
         //计算总页数，使用到了进一法取整
         return ceil($this->total / $this->num);
