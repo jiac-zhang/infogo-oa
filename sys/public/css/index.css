@@ -1,0 +1,104 @@
+
+/* universal */
+
+body {
+    background-color: #f8fafc;
+    font-family: Helvetica, "Microsoft YaHei", Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* header */
+
+.navbar-static-top {
+    border-color: #e7e7e7;
+    background-color: #fff;
+    box-shadow: 0px 1px 11px 2px rgba(42, 42, 42, 0.1);
+    border-top: 4px solid #00b5ad;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 40px;
+    margin-top: 0px;
+}
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+.navbar-light .navbar-brand {
+    color: rgba(0, 0, 0, 0.9);
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #000;
+}
+.footer>.container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.footer>.container>p {
+    margin: 19px 0;
+    color: #c1c1c1;
+}
+.footer>.container>p>a {
+    color: inherit;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+.text-md-right {
+    text-align: right !important;
+}
+.dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 0.9rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.navbar-nav>.active{
+    background-color: #eee;
+}
