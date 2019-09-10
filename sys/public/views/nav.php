@@ -17,7 +17,12 @@ $user_info = $_SESSION['user_info'];
                     if (!$permission['is_show']) {
                         continue;
                     }
-                    echo '<li><a href="/'. $permission['path'] .'.php">'. $permission['permission_name'] .'</a></li>';
+
+                    $class = '';
+                    if ($permission['path'] == pathinfo($_SERVER['REQUEST_URI'])['filename']) {
+                        $class = 'class="active"';
+                    }
+                    echo '<li '. $class .'><a href="/'. $permission['path'] .'.php">'. $permission['permission_name'] .'</a></li>';
                 }
                 ?>
             </ul>

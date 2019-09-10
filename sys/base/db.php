@@ -61,4 +61,16 @@ class db
         }
 
     }
+
+    public function prepare($sql)
+    {
+        // 创建预处理语句
+        $stmt=mysqli_stmt_init($this->dbConnect);
+
+        if (mysqli_stmt_prepare($stmt,$sql)) {
+            return $stmt;
+        } else {
+            return false;
+        }
+    }
 }

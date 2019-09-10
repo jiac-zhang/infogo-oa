@@ -15,7 +15,7 @@ check_login();
 check_permission();
 
 $db = db::getInstance();
-$sql = "SELECT d.*,u.id as user_id,u.nickname FROM info_departments d LEFT JOIN info_users u on d.id = u.department_id AND u.role_id = 2";
+$sql = "SELECT d.*,u.id as user_id,u.nickname FROM info_departments d LEFT JOIN info_users u on d.id = u.department_id AND u.role_id = 2 ORDER BY d.id ASC";
 
 $result = $db->query($sql);
 ?>
@@ -89,8 +89,8 @@ $result = $db->query($sql);
                 url: "/dpedit.php",
                 data: {department_id:department_id,type:2},
                 success: function(res){
-                    $(e).parents('tr').remove();
-                    if (res.code == 200) {
+                    if (res.code === 0) {
+                        $(e).parents('tr').remove();
                         alert("删除成功!");
                     } else {
                         alert(res.msg)
