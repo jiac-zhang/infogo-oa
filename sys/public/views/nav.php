@@ -1,8 +1,18 @@
 <?php
 $user_id = $_SESSION['user_id'];
 $user_info = $_SESSION['user_info'];
+$logo = $_SESSION['logo'];
 ?>
 <div class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
+    <?php
+    if ($logo) {
+        ?>
+        <div style="height: 50px;float: left">
+            <img style="height: 100%" src="/public/upload/logo1.png" alt="">
+        </div>
+        <?php
+    }
+    ?>
     <div class="container">
         <!-- Branding Image -->
         <a class="navbar-brand  hidden-sm" href="/">

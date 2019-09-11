@@ -42,10 +42,14 @@ $result = $db->query($sql);
 $permissions = array_column($result, null, 'permission_id');
 $user_info['role_name'] = current($permissions)['role_name'];
 
+$logo_sql = 'SELECT path FROM info_logo WHERE id=1';
+$logo_result = $db->query($logo_sql);
+
 $_SESSION['permissions'] = $permissions;
 $_SESSION['user_id'] = $user_info['id'];
 $_SESSION['user_info'] = $user_info;
 $_SESSION['permissions_path'] = array_column($permissions,'path');
+$_SESSION['logo'] = isset($logo_result[0]['path']) ? $logo_result[0]['path'] : '';
 
 header('Location:/index.php');
 die;
