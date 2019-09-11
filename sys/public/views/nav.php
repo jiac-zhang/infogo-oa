@@ -8,7 +8,7 @@ $logo = $_SESSION['logo'];
     if ($logo) {
         ?>
         <div style="height: 50px;float: left">
-            <img style="height: 100%" src="/public/upload/logo1.png" alt="">
+            <img style="height: 100%" src="<?php echo $logo; ?>" alt="">
         </div>
         <?php
     }

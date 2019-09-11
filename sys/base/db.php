@@ -41,9 +41,6 @@ class db
         return self::$instance;
     }
 
-    public function connect(){
-    }
-
     //系统级的查询方法，设置 为public ，如果在外部想要调用的时候，想自定sql句的候，可以直接query
     //查询应的结果，这个仅供读取使用
     public function query($sql)
