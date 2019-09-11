@@ -15,11 +15,16 @@ $password = md5(md5($password));
 
 $db = db::getInstance();
 
-$sql = "SELECT id,username,nickname,password,department_id,role_id FROM info_users WHERE username = '$username' AND password = '$password'";
+$sql = "SELECT id,username,nickname,password,department_id,role_id FROM info_users WHERE username = '$username'";
 
 $result = $db->query($sql);
 
 if (empty($result)) {
+    echo '<script>alert("用户名或密码错误。");window.history.back()</script>';
+    die;
+}
+
+if ($password != $result[0]['password']) {
     echo '<script>alert("用户名或密码错误。");window.history.back()</script>';
     die;
 }
