@@ -18,6 +18,40 @@ $type = isset($_POST['type']) ? (int)$_POST['type'] : 0;
 $db = db::getInstance();
 
 if ($type) {
+    if ($type == 2) {
+        $data = [
+            'code' => -1,
+            'msg' => '删除失败'
+        ];
+
+        $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
+
+        if (!$user_id) {
+            echo json_encode($data);die;
+        }
+        $cancel_manager_sql = "UPDATE info_users SET role_id=? WHERE id = {$user_id}";
+
+        //创建预处理语句
+        $stmt = $db->prepare($cancel_manager_sql);
+
+        $change_role_id = 3;
+        mysqli_stmt_bind_param($stmt, "i", $change_role_id);
+
+        $res = mysqli_stmt_execute($stmt);
+
+        // 关闭预处理语句
+        mysqli_stmt_close($stmt);
+
+        if ($res) {
+            $data = [
+                'code' => 0,
+                'msg' => 'success'
+            ];
+        }
+
+        echo json_encode($data);
+        die;
+    }
     $department_id = isset($_POST['department_id']) ? (int)$_POST['department_id'] : 0;
     $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
 
@@ -55,9 +89,9 @@ if ($type) {
 
 
     if ($result) {
-        echo '<script>alert("设置成功");window.location.href="/department.php";</script>';
+        echo '<script>alert("设置成功");window.location.href="department.php";</script>';
     } else {
-        echo '<script>alert("设置失败");window.location.href="/department.php";</script>';
+        echo '<script>alert("设置失败");window.location.href="department.php";</script>';
     }
     die;
 }
@@ -74,7 +108,7 @@ if ($department_id) {
     }
 
     if (!$result[0]['department_name']) {
-        echo '<script>alert("部门ID错误");window.location.href="/department.php";</script>';die;
+        echo '<script>alert("部门ID错误");window.location.href="department.php";</script>';die;
     }
 
 
@@ -82,7 +116,7 @@ if ($department_id) {
     $users = $db->query($users_sql);
 
 } else {
-    echo '<script>alert("部门ID错误");window.location.href="/department.php";</script>';die;
+    echo '<script>alert("部门ID错误");window.location.href="department.php";</script>';die;
 }
 
 ?>
@@ -95,7 +129,7 @@ if ($department_id) {
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
 </head>
 <body>
 <?php include 'public/views/nav.php'; ?>
@@ -108,7 +142,7 @@ if ($department_id) {
                         编辑部门经理
                     </h2>
                     <hr>
-                    <form action="/manageredit.php" method="POST" accept-charset="UTF-8">
+                    <form action="manageredit.php" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="department_id" value="<?php echo isset($department_id) ? $department_id : 0; ?>">
                         <div class="form-group">
@@ -134,13 +168,7 @@ if ($department_id) {
         </div>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->

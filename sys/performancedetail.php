@@ -20,10 +20,10 @@ $vote_user_id = isset($_GET['vote_user_id']) ? (int)$_GET['vote_user_id'] : 0;
 $time = isset($_GET['time']) ? explode(',', $_GET['time']) : '';
 
 if (!$vote_user_id) {
-    echo '<script>alert("用户id错误");window.location.href="/performance.php"</script>';die;
+    echo '<script>alert("用户id错误");window.location.href="performance.php"</script>';die;
 }
 if (!$time) {
-    echo '<script>alert("查询时间错误");window.location.href="/performance.php"</script>';die;
+    echo '<script>alert("查询时间错误");window.location.href="performance.php"</script>';die;
 }
 
 $sort_arr = [
@@ -74,7 +74,7 @@ $result = $db->query($sql);
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
@@ -120,13 +120,7 @@ $result = $db->query($sql);
         ?>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -138,11 +132,11 @@ $result = $db->query($sql);
     function sort_score(sort_key) {
         var order = sort_arr[sort_key];
 
-        window.location.href= '/performancedetail.php?vote_user_id=' + vote_user_id + '&time=' + time + '&sort_key=' + sort_key + '&order=' + order;
+        window.location.href= 'performancedetail.php?vote_user_id=' + vote_user_id + '&time=' + time + '&sort_key=' + sort_key + '&order=' + order;
     }
     function search_user() {
         var username = $('#username').val();
-        window.location.href= '/performancedetail.php?vote_user_id=' + vote_user_id + '&time=' + time + '&username=' + username;
+        window.location.href= 'performancedetail.php?vote_user_id=' + vote_user_id + '&time=' + time + '&username=' + username;
     }
 </script>
 </body>

@@ -33,7 +33,7 @@ $result = $db->query($sql);
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <style>
         .content {
@@ -53,7 +53,7 @@ $result = $db->query($sql);
 <?php include 'public/views/nav.php'; ?>
 <div class="container">
     <div style="margin-bottom: 15px">
-        <a href="/dpedit.php" class="btn btn-success">新建部门</a>
+        <a href="dpedit.php" class="btn btn-success">新建部门</a>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered">
@@ -71,7 +71,7 @@ $result = $db->query($sql);
                     echo '<tr><td colspan="4">暂无数据</td></tr>';
                 } else {
                     foreach ($result as $department) {
-                        echo '<tr><td>'. $department['id'] .'</td><td>'. $department['name'] .'</td><td>'. $department['nickname'] .'</td><td><a href="/dpedit.php?id='. $department['id'] .'" class="btn btn-primary">编辑部门</a>&nbsp;<a href="/manageredit.php?id='. $department['id'] .'" class="btn btn-primary">编辑部门经理</a>&nbsp;<a href="javascript:void(0)" onclick="department_del(this,'. $department['id'] .')" class="btn btn-danger">删除</a></td></tr>';
+                        echo '<tr><td>'. $department['id'] .'</td><td>'. $department['name'] .'</td><td>'. $department['nickname'] .'</td><td><a href="dpedit.php?id='. $department['id'] .'" class="btn btn-primary">编辑部门</a>&nbsp;<a href="manageredit.php?id='. $department['id'] .'" class="btn btn-primary">设置部门经理</a>&nbsp;<a href="javascript:void(0)" onclick="department_del(this,'. $department['id'] .')" class="btn btn-danger">删除</a></td></tr>';
                     }
                 }
                 ?>
@@ -84,13 +84,7 @@ $result = $db->query($sql);
         ?>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -99,7 +93,7 @@ $result = $db->query($sql);
         if (confirm('确认删除部门吗？将会取消部门经理身份并不可逆转')) {
             $.ajax({
                 type: "POST",
-                url: "/dpedit.php",
+                url: "dpedit.php",
                 data: {department_id:department_id,type:2},
                 success: function(res){
                     if (res.code === 0) {

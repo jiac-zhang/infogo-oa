@@ -15,7 +15,7 @@ $logo = $_SESSION['logo'];
     ?>
     <div class="container">
         <!-- Branding Image -->
-        <a class="navbar-brand  hidden-sm" href="/">
+        <a class="navbar-brand  hidden-sm" href="javascript:void(0)">
             绩效考核管理
         </a>
 
@@ -32,7 +32,7 @@ $logo = $_SESSION['logo'];
                     if ($permission['path'] == pathinfo($_SERVER['REQUEST_URI'])['filename']) {
                         $class = 'class="active"';
                     }
-                    echo '<li '. $class .'><a href="/'. $permission['path'] .'.php">'. $permission['permission_name'] .'</a></li>';
+                    echo '<li '. $class .'><a href="'. $permission['path'] .'.php">'. $permission['permission_name'] .'</a></li>';
                 }
                 ?>
             </ul>
@@ -43,7 +43,7 @@ $logo = $_SESSION['logo'];
                     </a>
                     <div aria-labelledby="navbarDropdown" class="dropdown-menu">
                         <a id="logout" href="#" class="dropdown-item">
-                            <form action="/logout.php" method="POST" onsubmit="return confirm('您确定要退出吗？');">
+                            <form action="logout.php" method="POST" onsubmit="return confirm('您确定要退出吗？');">
                                 <button type="submit" name="button" class="btn btn-block btn-danger">退出</button>
                             </form>
                         </a>

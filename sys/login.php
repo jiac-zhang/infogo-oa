@@ -5,14 +5,14 @@
  * Date: 2019/9/10
  * Time: 10:05
  */
-error_reporting(0);
+require_once 'base/function.php';
 session_start();
 
-$user_id = $_SESSION['user_id'];
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
 if (!empty($user_id)) {
     header('HTTP/1.1 301 Moved Permanently');
-    header('Location:/index.php');
+    header('Location:index.php');
 }
 ?>
 <html lang="zh-CN">
@@ -24,6 +24,10 @@ if (!empty($user_id)) {
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Scripts -->
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="public/js/jquery.md5.js"></script>
     <style>
         /* universal */
 
@@ -102,7 +106,7 @@ if (!empty($user_id)) {
 <div class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
     <div class="container">
         <!-- Branding Image -->
-        <a class="navbar-brand  hidden-sm" href="http://bbs.harryzhang.com.cn">
+        <a class="navbar-brand  hidden-sm" href="javascript:void(0)">
             绩效考核管理
         </a>
 
@@ -117,7 +121,7 @@ if (!empty($user_id)) {
             </ul>-->
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right hidden-sm">
-                <li><a href="/login.php">登录</a></li>
+                <li><a href="login.php">登录</a></li>
             </ul>
         </div>
     </div>
@@ -130,7 +134,7 @@ if (!empty($user_id)) {
                     <div class="card-header">登录</div>
 
                     <div class="card-body">
-                        <form method="POST" action="/doLogin.php">
+                        <form method="POST" id="loginForm" action="doLogin.php">
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">用户名</label>
 
@@ -151,7 +155,7 @@ if (!empty($user_id)) {
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button onclick="form_submit()" class="btn btn-primary">
                                         登录
                                     </button>
                                 </div>
@@ -163,15 +167,13 @@ if (!empty($user_id)) {
         </div>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
-<!-- Scripts -->
-<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function form_submit() {
+        var password = $('#password').val();
+        $('#password').val($.md5(password));
+    }
+</script>
+
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

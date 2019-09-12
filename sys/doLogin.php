@@ -11,7 +11,12 @@ session_start();
 
 $username = addslashes($_POST['username']);
 $password = addslashes($_POST['password']);
-$password = md5(md5($password));
+$password = md5($password);
+
+if (strlen($username) > 15) {
+    echo '<script>alert("用户名长度过长。");window.history.back()</script>';
+    die;
+}
 
 $db = db::getInstance();
 
@@ -19,12 +24,7 @@ $sql = "SELECT id,username,nickname,password,department_id,role_id FROM info_use
 
 $result = $db->query($sql);
 
-if (empty($result)) {
-    echo '<script>alert("用户名或密码错误。");window.history.back()</script>';
-    die;
-}
-
-if ($password != $result[0]['password']) {
+if (empty($result) || $password != $result[0]['password']) {
     echo '<script>alert("用户名或密码错误。");window.history.back()</script>';
     die;
 }
@@ -51,7 +51,7 @@ $_SESSION['user_info'] = $user_info;
 $_SESSION['permissions_path'] = array_column($permissions,'path');
 $_SESSION['logo'] = isset($logo_result[0]['path']) ? $logo_result[0]['path'] : '';
 
-header('Location:/index.php');
+header('Location:index.php');
 die;
 
 

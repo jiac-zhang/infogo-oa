@@ -17,7 +17,7 @@ $vote_user_id = isset($_POST['vote_user_id']) ? (int)$_POST['vote_user_id'] : $v
 $type = isset($_POST['type']) ? (int)$_POST['type'] : 0;
 
 if (!$vote_user_id) {
-    echo '<script>alert("用户id错误");window.location.href="/vote.php"</script>';die;
+    echo '<script>alert("用户id错误");window.location.href="vote.php"</script>';die;
 }
 
 $db = db::getInstance();
@@ -25,7 +25,7 @@ $check_role_sql = "SELECT id,nickname from info_users WHERE id={$vote_user_id} a
 
 $check_role_result = $db->query($check_role_sql);
 if (empty($check_role_result)) {
-    echo '<script>alert("只能给经理投票");window.location.href="/vote.php"</script>';die;
+    echo '<script>alert("只能给经理投票");window.location.href="vote.php"</script>';die;
 }
 
 
@@ -45,12 +45,16 @@ if ($month >= 1 && $month <= 3) {
 
 $user_id = $_SESSION['user_id'];
 
+if ($vote_user_id == $user_id) {
+    echo '<script>alert("不能投票给自己");window.location.href="vote.php"</script>';die;
+}
+
 $check_vote_sql = "SELECT id FROM info_vote WHERE user_id={$user_id} AND vote_user_id={$vote_user_id} AND year={$year} AND quarter={$quarter}";
 
 $check_vote_result = $db->query($check_vote_sql);
 
 if (!empty($check_vote_result)) {
-    echo '<script>alert("不能重复投票");window.location.href="/vote.php"</script>';die;
+    echo '<script>alert("不能重复投票");window.location.href="vote.php"</script>';die;
 }
 
 if ($type) {
@@ -72,9 +76,9 @@ if ($type) {
     mysqli_stmt_close($stmt);
 
     if ($res) {
-        echo '<script>alert("投票成功");window.location.href="/vote.php"</script>';
+        echo '<script>alert("投票成功");window.location.href="vote.php"</script>';
     } else {
-        echo '<script>alert("投票失败");window.location.href="/vote.php"</script>';
+        echo '<script>alert("投票失败");window.location.href="vote.php"</script>';
     }
 
     die;
@@ -91,7 +95,7 @@ if ($type) {
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
 </head>
 <body>
 <?php include 'public/views/nav.php'; ?>
@@ -104,7 +108,7 @@ if ($type) {
                         给 <?php echo $check_role_result[0]['nickname'];?> 投票
                     </h2>
                     <hr>
-                    <form action="/dovote.php" method="POST" accept-charset="UTF-8">
+                    <form action="dovote.php" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="vote_user_id" value="<?php echo isset($_GET['vote_user_id']) ? (int)$_GET['vote_user_id'] : 0;?>">
                         <div class="form-group">
@@ -164,13 +168,7 @@ if ($type) {
         </div>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->

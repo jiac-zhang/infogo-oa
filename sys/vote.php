@@ -69,7 +69,7 @@ $voted_score = array_column($voted, null, 'vote_user_id');
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <style>
         .content {
@@ -120,13 +120,13 @@ $voted_score = array_column($voted, null, 'vote_user_id');
                 foreach ($managers as $manager) {
                     if (in_array($manager['id'], $voted_manager)) {
                         $status = '已投票';
-                        $edit = '<a href="/votedetail.php?vote_user_id='. $manager['id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a>';
+                        $edit = '<a href="votedetail.php?vote_user_id='. $manager['id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a>';
                     } else {
                         $status = '未投票';
                         if ($search_quarter < $quarter) {
                             $edit = '<button disabled class="btn btn-danger">已过期</button>';
                         } else {
-                            $edit = '<a href="/dovote.php?vote_user_id='. $manager['id'] .'" class="btn btn-success">投票</a>';
+                            $edit = '<a href="dovote.php?vote_user_id='. $manager['id'] .'" class="btn btn-success">投票</a>';
                         }
                     }
                     echo '<tr><td>'. $manager['nickname'] .'</td><td>'. $manager['department_name'] .'</td><td>'. $status .'</td><td>'. (isset($voted_score[$manager['id']]['total']) ? $voted_score[$manager['id']]['total'] : '') .'</td><td>'. $year .'</td><td>'. $search_quarter .'</td><td>'. $edit .'</td></tr>';
@@ -142,13 +142,7 @@ $voted_score = array_column($voted, null, 'vote_user_id');
         ?>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -156,7 +150,7 @@ $voted_score = array_column($voted, null, 'vote_user_id');
     $(function () {
         $('#time').on('change', function () {
             var time = $(this).val();
-            window.location.href="/vote.php?time=" + time;
+            window.location.href="vote.php?time=" + time;
         })
     })
 </script>

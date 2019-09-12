@@ -63,7 +63,7 @@ $result = $db->query($sql);
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <style>
         .content {
@@ -107,10 +107,10 @@ $result = $db->query($sql);
             <tbody>
             <?php
             if (empty($result)) {
-                echo '<tr><td colspan="4">暂无数据</td></tr>';
+                echo '<tr><td colspan="5">暂无数据</td></tr>';
             } else {
                 foreach ($result as $vote) {
-                    echo '<tr><td>'. $vote['nickname'] .'</td><td>'. $vote['total'] .'</td><td>'. $year .'</td><td>'. $search_quarter .'</td><td><a href="/performancedetail.php?vote_user_id='. $vote['vote_user_id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a></td></tr>';
+                    echo '<tr><td>'. $vote['nickname'] .'</td><td>'. $vote['total'] .'</td><td>'. $year .'</td><td>'. $search_quarter .'</td><td><a href="performancedetail.php?vote_user_id='. $vote['vote_user_id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a></td></tr>';
                 }
             }
             ?>
@@ -123,13 +123,7 @@ $result = $db->query($sql);
         ?>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -137,7 +131,7 @@ $result = $db->query($sql);
     $(function () {
         $('#time').on('change', function () {
             var time = $(this).val();
-            window.location.href="/performance.php?time=" + time;
+            window.location.href="performance.php?time=" + time;
         })
     })
 </script>

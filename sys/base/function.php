@@ -9,7 +9,7 @@
 function check_login() {
     if (!isset($_SESSION['user_id'])) {
         header('HTTP/1.1 301 Moved Permanently');
-        header('Location:/login.php');
+        header('Location:login.php');
         die;
     }
 }
@@ -19,7 +19,7 @@ function check_permission() {
 
     $file_name = $path_info['filename'];
     if (!in_array($file_name,$_SESSION['permissions_path'])) {
-        echo '<script>alert("没有权限访问此页面");window.location.href="/index.php"</script>';
+        echo '<script>alert("没有权限访问此页面");window.location.href="index.php"</script>';
         die;
     }
 }

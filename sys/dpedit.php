@@ -28,13 +28,21 @@ if (in_array($type, [1, 2])) {
     switch ($type) {
         case 1:
             //编辑动作
+            $name = isset($_POST['name']) ? addslashes($_POST['name']) : '';
+
+            $check_sql = "SELECT id FROM info_departments WHERE name='{$name}'";
+
+            $res = $db->query($check_sql);
+
+            if ($res) {
+                echo '<script>alert("部门名字重复！");window.location.href="department.php"</script>';die;
+            }
 
             $sql = $department_id ? "UPDATE info_departments SET name=? WHERE id = {$department_id}" : 'INSERT INTO info_departments (name) VALUES(?)';
 
             //创建预处理语句
             $stmt = $db->prepare($sql);
 
-            $name = isset($_POST['name']) ? addslashes($_POST['name']) : '';
             mysqli_stmt_bind_param($stmt, 's', $name);
 
             $res = mysqli_stmt_execute($stmt);
@@ -44,9 +52,9 @@ if (in_array($type, [1, 2])) {
 
             $act = $department_id ? '编辑' : '新增';
             if ($res) {
-                echo '<script>alert("'. $act .'部门成功");window.location.href="/department.php"</script>';
+                echo '<script>alert("'. $act .'部门成功");window.location.href="department.php"</script>';
             } else {
-                echo '<script>alert("'. $act .'部门失败");window.location.href="/department.php"</script>';
+                echo '<script>alert("'. $act .'部门失败");window.location.href="department.php"</script>';
             }
             break;
         case 2:
@@ -126,7 +134,7 @@ if ($department_id) {
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="public/css/index.css">
 </head>
 <body>
 <?php include 'public/views/nav.php'; ?>
@@ -139,7 +147,7 @@ if ($department_id) {
                         <?php echo $title;?>
                     </h2>
                     <hr>
-                    <form action="/dpedit.php" method="POST" accept-charset="UTF-8">
+                    <form action="dpedit.php" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="department_id" value="<?php echo isset($department_info['id']) ? $department_info['id']: 0; ?>">
                         <div class="form-group">
@@ -154,13 +162,7 @@ if ($department_id) {
         </div>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">
-            <a href="javascript:void(0)" target="_blank">Harry</a> <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
-    </div>
-</footer>
+
 <!-- Scripts -->
 <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->

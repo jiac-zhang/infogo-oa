@@ -11,7 +11,7 @@ class page
 //url
     protected $url;
     //总页数
-    protected $pageCount;
+    protected $page_count;
     //总条数
     protected $total;
     //每页显示数
@@ -28,7 +28,7 @@ class page
         //每页显示数
         $this->num = $num;
         //总页数
-        $this->pageCount = $this->getPageCount();
+        $this->page_count = $this->getPageCount();
         //当前页
         $this->page = $this->getCurrentPage();
         //url
@@ -59,7 +59,7 @@ class page
 
     protected function end()
     {
-        return $this->setQueryString('page='.$this->pageCount);
+        return $this->setQueryString('page='.$this->page_count);
     }
 
 
@@ -77,7 +77,7 @@ class page
     protected function next()
     {
 
-        $page = ($this->page >= $this->pageCount) ?  $this->pageCount : ($this->page + 1);
+        $page = ($this->page >= $this->page_count) ?  $this->page_count : ($this->page + 1);
 
         return $this->setQueryString('page='.$page);
     }
@@ -134,13 +134,14 @@ class page
         //协议：主机：端口：文件和请求
         //判断是否定义过端口，并且端口是否为443，如果为443则是https协议，否则就是http协议
         $protocal = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ?'https://' : 'http://';
+        $server_name = $_SERVER['SERVER_NAME'] == 'localhost' ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME'];
 
         if (80 == $_SERVER['SERVER_PORT'] || 443 == $_SERVER['SERVER_PORT']) {
-            $url = $protocal.$_SERVER['SERVER_NAME'].$path;
+            $url = $protocal.$server_name.$path;
         } else {
             //http://www.baidu.com:8012/index.php?username=liwenkai
 
-            $url = $protocal.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].$path;
+            $url = $protocal.$server_name.':'.$_SERVER['SERVER_PORT'].$path;
         }
 
 
@@ -160,8 +161,8 @@ class page
             $page = (int) $_GET['page'];
 
             //你的页码不能够大于总页数
-            if ($page > $this->pageCount) {
-                $page = $this->pageCount;
+            if ($page > $this->page_count) {
+                $page = $this->page_count;
             }
             //你的页码不能小于1
             if ($page < 1) {
