@@ -20,11 +20,9 @@ if (!empty($user_id)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>绩效考核管理 - Infogo</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <!-- Scripts -->
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="public/js/jquery.md5.js"></script>
@@ -100,26 +98,14 @@ if (!empty($user_id)) {
         }
     </style>
 </head>
-
 <body>
-
 <div class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
     <div class="container">
         <!-- Branding Image -->
         <a class="navbar-brand  hidden-sm" href="javascript:void(0)">
             绩效考核管理
         </a>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <!--<ul class="navbar-nav mr-auto">
-                <li class="nav-item "><a class="nav-link" href="http://bbs.harryzhang.com.cn/topics">话题</a></li>
-                <li class="nav-item "><a class="nav-link" href="http://bbs.harryzhang.com.cn/categories/1">分享</a></li>
-                <li class="nav-item "><a class="nav-link" href="http://bbs.harryzhang.com.cn/categories/2">教程</a></li>
-                <li class="nav-item "><a class="nav-link" href="http://bbs.harryzhang.com.cn/categories/3">问答</a></li>
-                <li class="nav-item "><a class="nav-link" href="http://bbs.harryzhang.com.cn/categories/4">公告</a></li>
-            </ul>-->
-            <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right hidden-sm">
                 <li><a href="login.php">登录</a></li>
             </ul>
@@ -134,7 +120,7 @@ if (!empty($user_id)) {
                     <div class="card-header">登录</div>
 
                     <div class="card-body">
-                        <form method="POST" id="loginForm" action="doLogin.php">
+                        <form method="POST" id="loginForm" action="doLogin.php" onsubmit="return form_submit()">
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">用户名</label>
 
@@ -155,7 +141,7 @@ if (!empty($user_id)) {
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button onclick="form_submit()" class="btn btn-primary">
+                                    <button class="btn btn-primary">
                                         登录
                                     </button>
                                 </div>
@@ -170,7 +156,13 @@ if (!empty($user_id)) {
 <script>
     function form_submit() {
         var password = $('#password').val();
-        $('#password').val($.md5(password));
+        if (password.length < 6) {
+            alert('密码长度最少为6位');
+            return false;
+        }
+        if (password !== '' && password) {
+            $('#password').val($.md5(password));
+        }
     }
 </script>
 

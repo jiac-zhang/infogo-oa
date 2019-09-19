@@ -151,7 +151,7 @@ if ($department_id) {
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="department_id" value="<?php echo isset($department_info['id']) ? $department_info['id']: 0; ?>">
                         <div class="form-group">
-                            <input type="text" name="name" value="<?php echo isset($department_info['name']) ? $department_info['name'] : ''; ?>" placeholder="请填写部门名称" required="required" class="form-control">
+                            <input type="text" name="name" value="<?php echo isset($department_info['name']) ? $department_info['name'] : ''; ?>" placeholder="请填写部门名称" required="required" maxlength="10" class="form-control">
                         </div>
                         <div class="well well-sm">
                             <button type="submit" class="btn btn-primary"><i aria-hidden="true" class="far fa-save mr-2"></i> 保存</button>
