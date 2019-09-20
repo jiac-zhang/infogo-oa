@@ -99,6 +99,9 @@ $voted_score = array_column($voted, null, 'vote_user_id');
             </select>
         </div>
     </div>
+    <div style="margin-bottom: 15px">
+        <a href="allvote.php" class="btn btn-success">批量投票</a>
+    </div>
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>

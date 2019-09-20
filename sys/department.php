@@ -15,13 +15,22 @@ check_login();
 check_permission();
 
 $db = db::getInstance();
-$count_sql = 'SELECT count(id) as total FROM info_departments';
+
+$where = '1=1';
+
+$search_department_name = isset($_GET['department_name']) ? addslashes($_GET['department_name']) : '';
+
+if (!empty($search_department_name)) {
+    $where .= " AND d.name='{$search_department_name}'";
+}
+
+$count_sql = 'SELECT count(id) as total FROM info_departments d WHERE '.$where;
 $count_result = $db->query($count_sql);
 $total = $count_result ? $count_result[0]['total'] : 0;
 
 $page = new page($total);
 
-$sql = "SELECT d.*,u.id as user_id,u.nickname FROM info_departments d LEFT JOIN info_users u on d.id = u.department_id AND u.role_id = 2 GROUP BY d.id ORDER BY d.id ASC LIMIT {$page->limit()}";
+$sql = "SELECT d.*,u.id as user_id,u.nickname FROM info_departments d LEFT JOIN info_users u on d.id = u.department_id AND u.role_id = 2 WHERE {$where} GROUP BY d.id ORDER BY d.id ASC LIMIT {$page->limit()}";
 $result = $db->query($sql);
 ?>
 <html lang="zh-CN">
@@ -55,11 +64,18 @@ $result = $db->query($sql);
     <div style="margin-bottom: 15px">
         <a href="dpedit.php" class="btn btn-success">新建部门</a>
     </div>
+    <div class="row">
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" name="department_name" id="department_name" placeholder="部门名称" value="<?php echo isset($_GET['department_name']) ? $_GET['department_name'] : ''; ?>">
+        </div>
+        <div class="form-group col-md-2">
+            <button class="btn btn-primary" onclick="search_department()">搜索</button>
+        </div>
+    </div>
     <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>部门ID</th>
                 <th>部门名称</th>
                 <th>部门经理</th>
                 <th>编辑</th>
@@ -71,7 +87,7 @@ $result = $db->query($sql);
                     echo '<tr><td colspan="4">暂无数据</td></tr>';
                 } else {
                     foreach ($result as $department) {
-                        echo '<tr><td>'. $department['id'] .'</td><td>'. $department['name'] .'</td><td>'. $department['nickname'] .'</td><td><a href="dpedit.php?id='. $department['id'] .'" class="btn btn-primary">编辑部门</a>&nbsp;<a href="manageredit.php?id='. $department['id'] .'" class="btn btn-primary">设置部门经理</a>&nbsp;<a href="javascript:void(0)" onclick="department_del(this,'. $department['id'] .')" class="btn btn-danger">删除</a></td></tr>';
+                        echo '<tr><td>'. $department['name'] .'</td><td>'. $department['nickname'] .'</td><td><a href="dpedit.php?id='. $department['id'] .'" class="btn btn-primary">编辑部门</a>&nbsp;<a href="manageredit.php?id='. $department['id'] .'" class="btn btn-primary">设置部门经理</a>&nbsp;<a href="javascript:void(0)" onclick="department_del(this,'. $department['id'] .')" class="btn btn-danger">删除</a></td></tr>';
                     }
                 }
                 ?>
@@ -90,10 +106,10 @@ $result = $db->query($sql);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
     function department_del(e,department_id) {
-        if (confirm('确认删除部门吗？将会取消部门经理身份并不可逆转')) {
+        if (confirm('确认删除部门吗？将会取消部门下员工并不可逆转')) {
             $.ajax({
                 type: "POST",
-                url: "dpedit.php",
+                url: "api/dpApi.php",
                 data: {department_id:department_id,type:2},
                 success: function(res){
                     if (res.code === 0) {
@@ -106,6 +122,10 @@ $result = $db->query($sql);
                 dataType:'json'
             });
         }
+    }
+    function search_department() {
+        var department_name = $('#department_name').val();
+        window.location.href= 'department.php?department_name=' + department_name;
     }
 </script>
 </body>

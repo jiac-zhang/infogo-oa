@@ -17,7 +17,7 @@ $vote_user_id = isset($_POST['vote_user_id']) ? (int)$_POST['vote_user_id'] : $v
 $type = isset($_POST['type']) ? (int)$_POST['type'] : 0;
 
 if (!$vote_user_id) {
-    echo '<script>alert("用户id错误");window.location.href="vote.php"</script>';die;
+    echo '<script>alert("用户id错误");window.location.href="voteApi.php"</script>';die;
 }
 
 $db = db::getInstance();
@@ -96,6 +96,11 @@ if ($type) {
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="public/css/index.css">
+    <style>
+        .container>.container{
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 <?php include 'public/views/nav.php'; ?>
@@ -111,53 +116,193 @@ if ($type) {
                     <form action="dovote.php" method="POST" accept-charset="UTF-8">
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="vote_user_id" value="<?php echo isset($_GET['vote_user_id']) ? (int)$_GET['vote_user_id'] : 0;?>">
-                        <div class="form-group">
-                            <label for="ability">工作能力</label>
-                            <select class="form-control" name="ability" id="ability">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="ability">工作能力</label>
+                                <select class="form-control" name="ability" id="ability">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="attitude">态度</label>
+                                <select class="form-control" name="attitude" id="attitude">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="leadership">领导力</label>
+                                <select class="form-control" name="leadership" id="leadership">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="attitude">态度</label>
-                            <select class="form-control" name="attitude" id="attitude">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
+                        <div class="well well-sm">
+                            <button type="submit" class="btn btn-primary"><i aria-hidden="true" class="far fa-save mr-2"></i> 提交</button>
                         </div>
-                        <div class="form-group">
-                            <label for="leadership">领导力</label>
-                            <select class="form-control" name="leadership" id="leadership">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-10 offset-md-1">
+            <div class="card ">
+                <div class="card-body">
+                    <h2><i class="far fa-edit"></i>
+                        给 <?php echo $check_role_result[0]['nickname'];?> 投票
+                    </h2>
+                    <hr>
+                    <form action="dovote.php" method="POST" accept-charset="UTF-8">
+                        <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="vote_user_id" value="<?php echo isset($_GET['vote_user_id']) ? (int)$_GET['vote_user_id'] : 0;?>">
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="ability">工作能力</label>
+                                <select class="form-control" name="ability" id="ability">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="attitude">态度</label>
+                                <select class="form-control" name="attitude" id="attitude">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="leadership">领导力</label>
+                                <select class="form-control" name="leadership" id="leadership">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="well well-sm">
+                            <button type="submit" class="btn btn-primary"><i aria-hidden="true" class="far fa-save mr-2"></i> 提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-10 offset-md-1">
+            <div class="card ">
+                <div class="card-body">
+                    <h2><i class="far fa-edit"></i>
+                        给 <?php echo $check_role_result[0]['nickname'];?> 投票
+                    </h2>
+                    <hr>
+                    <form action="dovote.php" method="POST" accept-charset="UTF-8">
+                        <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="vote_user_id" value="<?php echo isset($_GET['vote_user_id']) ? (int)$_GET['vote_user_id'] : 0;?>">
+                        <div class="row">
+                            <div class="form-group col-sm-4">
+                                <label for="ability">工作能力</label>
+                                <select class="form-control" name="ability" id="ability">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="attitude">态度</label>
+                                <select class="form-control" name="attitude" id="attitude">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="leadership">领导力</label>
+                                <select class="form-control" name="leadership" id="leadership">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="well well-sm">
                             <button type="submit" class="btn btn-primary"><i aria-hidden="true" class="far fa-save mr-2"></i> 提交</button>

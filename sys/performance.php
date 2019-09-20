@@ -51,7 +51,7 @@ $total = $count_result ? $count_result[0]['total'] : 0;
 
 $page = new page($total);
 
-$sql = "SELECT v.vote_user_id,u.nickname,SUM(v.total) AS total FROM info_vote v INNER JOIN info_users u ON v.vote_user_id=u.id WHERE YEAR={$year} AND QUARTER={$search_quarter} GROUP BY vote_user_id ORDER BY total DESC LIMIT {$page->limit()}";
+$sql = "SELECT v.vote_user_id,u.nickname,SUM(v.total) AS total,count(v.id) as vote_users_total FROM info_vote v INNER JOIN info_users u ON v.vote_user_id=u.id WHERE YEAR={$year} AND QUARTER={$search_quarter} GROUP BY vote_user_id ORDER BY total DESC LIMIT {$page->limit()}";
 $result = $db->query($sql);
 ?>
 <html lang="zh-CN">
@@ -99,6 +99,8 @@ $result = $db->query($sql);
             <tr>
                 <th>经理名称</th>
                 <th>总得分</th>
+                <th>已投票人数</th>
+                <th>平均得分</th>
                 <th>年度</th>
                 <th>季度</th>
                 <th>编辑</th>
@@ -110,7 +112,7 @@ $result = $db->query($sql);
                 echo '<tr><td colspan="5">暂无数据</td></tr>';
             } else {
                 foreach ($result as $vote) {
-                    echo '<tr><td>'. $vote['nickname'] .'</td><td>'. $vote['total'] .'</td><td>'. $year .'</td><td>'. $search_quarter .'</td><td><a href="performancedetail.php?vote_user_id='. $vote['vote_user_id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a></td></tr>';
+                    echo '<tr><td>'. $vote['nickname'] .'</td><td>'. $vote['total'] .'</td><td>'. $vote['vote_users_total'] .'</td><td>'. round($vote['total']/$vote['vote_users_total'],2) .'</td><td>'. $year .'</td><td>'. $search_quarter .'</td><td><a href="performancedetail.php?vote_user_id='. $vote['vote_user_id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a></td></tr>';
                 }
             }
             ?>

@@ -15,7 +15,7 @@ $logo = $_SESSION['logo'];
     ?>
     <div class="container">
         <!-- Branding Image -->
-        <a class="navbar-brand  hidden-sm" href="javascript:void(0)">
+        <a class="navbar-brand  hidden-sm" href="index.php">
             绩效考核管理
         </a>
 

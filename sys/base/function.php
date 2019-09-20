@@ -27,7 +27,7 @@ function check_permission() {
 function check_permission_ajax() {
     $path_info = pathinfo($_SERVER['REQUEST_URI']);
 
-    $file_name = $path_info['filename'];
+    $file_name = 'api/'.$path_info['filename'];
     if (!in_array($file_name,$_SESSION['permissions_path'])) {
         $return = [
             'code' => -1,
@@ -35,5 +35,20 @@ function check_permission_ajax() {
         ];
         echo json_encode($return);
         die;
+    }
+}
+
+function trans_role($role_id) {
+    switch ($role_id) {
+        case 1:
+            return 'admin';
+            break;
+        case 2:
+            return '经理';
+            break;
+        case 3:
+        default:
+            return '员工';
+            break;
     }
 }

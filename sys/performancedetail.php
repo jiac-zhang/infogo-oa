@@ -59,7 +59,7 @@ if (!empty($username)) {
     $total = 1;
 }
 
-$page = new page($total,2);
+$page = new page($total);
 
 $sql = "SELECT u.nickname,v.ability,v.attitude,v.leadership,v.total FROM info_vote v INNER JOIN info_users u ON v.user_id=u.id WHERE v.year={$year} AND v.quarter={$search_quarter} AND v.vote_user_id={$vote_user_id} {$search_where} ORDER BY v.{$sort_key} {$order} LIMIT {$page->limit()}";
 
@@ -113,6 +113,9 @@ $result = $db->query($sql);
             ?>
             </tbody>
         </table>
+        <div class="">
+            <a class="btn btn-success" href="performance.php">返回</a>
+        </div>
         <?php
         if ($page->getPageCount() > 1) {
             include 'public/views/pagination.php';
