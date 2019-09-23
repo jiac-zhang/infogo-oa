@@ -109,7 +109,7 @@ $result = $db->query($sql);
             <tbody>
             <?php
             if (empty($result)) {
-                echo '<tr><td colspan="5">暂无数据</td></tr>';
+                echo '<tr><td colspan="7">暂无数据</td></tr>';
             } else {
                 foreach ($result as $vote) {
                     echo '<tr><td>'. $vote['nickname'] .'</td><td>'. $vote['total'] .'</td><td>'. $vote['vote_users_total'] .'</td><td>'. round($vote['total']/$vote['vote_users_total'],2) .'</td><td>'. $year .'</td><td>'. $search_quarter .'</td><td><a href="performancedetail.php?vote_user_id='. $vote['vote_user_id'] .'&time='.$year.','.$search_quarter.'" class="btn btn-primary">查看详情</a></td></tr>';

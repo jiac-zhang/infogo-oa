@@ -8,6 +8,7 @@
 require_once 'base/db.php';
 require_once 'base/upload.php';
 require_once 'base/function.php';
+error_reporting(E_ALL ^ E_NOTICE);
 session_start();
 
 check_login();

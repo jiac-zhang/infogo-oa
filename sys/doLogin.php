@@ -20,7 +20,7 @@ if (strlen($username) > 15) {
 
 $db = db::getInstance();
 
-$sql = "SELECT id,username,nickname,password,department_id,role_id FROM info_users WHERE username = '$username'";
+$sql = "SELECT id,username,nickname,password,department_id,role_id FROM info_users WHERE username = '{$username}'";
 
 $result = $db->query($sql);
 
